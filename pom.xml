@@ -12,7 +12,7 @@
 	<groupId>com.mwmd</groupId>
 	<artifactId>aem-author-collab</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<name>Author Collab</name>
 	<description>Live Authoring Collaboration for AEM Sites</description>
 
@@ -51,7 +51,7 @@
 		<connection>scm:git:https://github.com/mwmd/aem-author-collab.git</connection>
 		<url>scm:git:https://github.com/mwmd/aem-author-collab.git</url>
 		<developerConnection>scm:git:https://github.com/mwmd/aem-author-collab.git</developerConnection>
-	  <tag>0.1.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<build>
