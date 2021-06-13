@@ -1,6 +1,6 @@
 # Live Authoring Collaboration for AEM Sites
 
-This project is an extension for the Adobe Experience Manager Sites platform. It enhances the AEM Author environment to support live collaboration of content editors, providing both security during concurrent editing as well as additional features for real-time interaction. 
+This project is an extension for the Adobe Experience Manager Sites platform. It enhances the AEM Author environment to support live collaboration of content editors, providing both protection during concurrent editing as well as additional features for live interaction. 
 
 ## Features
 
@@ -21,21 +21,21 @@ This project is an extension for the Adobe Experience Manager Sites platform. It
   - Immediate annotation and sketch updates 
   - On-page notification for new annotations
 
-Although these features are available for use in the current release, it should be noted that this is an early version and should be considered a technology demo rather than production ready.
+Although these features are available for use in the current release, it should be noted that this is an early version and should be considered a technology demo rather than production ready software.
 
 ## Supported platforms
 
 * AEM as a Cloud Service
-* AEM 6.5 SP8+ (On Premise / Managed Service / Cloud Manager)
-* Supported by newer releases of Chrome, Edge, Firefox, Safari
+* AEM 6.5.8+ (On Premise / Managed Service / Cloud Manager)
+* Compatible with current versions of Chrome, Edge, Firefox, Safari
 
 ## How to install
 
-### Automated installation with your Maven build
+### Embedded installation with Maven
 
-The package is available as a Maven artifact and can simply get added to your project build. This is the simplest way and the only way supported with AEM as a Cloud Service.
+The package is available as a Maven artifact and can get added to an existing AEM project. This is the simplest setup and the possible option with AEM as a Cloud Service.
 
-This works with current Maven archetypes for AEM (packaging in `all` module) and older Maven archetypes for AEM (packaging in `ui.apps` module). The below instructions assume the current Maven archetype.
+It works with current Maven archetypes for AEM (packaging in `all` module) as well as older Maven archetypes for AEM (packaging in `ui.apps` module). The below instructions assume the current Maven archetype.
 
 1. First add the Maven repository into the ***project*** `pom.xml`:
 
@@ -81,7 +81,7 @@ This works with current Maven archetypes for AEM (packaging in `all` module) and
 </dependency>
 ```
 
-4. And finally embed the package in your main application package in the same file:
+4. And finally embed the extension in your main application package in the same file:
 
 ```xml
 <plugin>
@@ -108,23 +108,20 @@ That's it, you can now build your application as usual. The package gets embedde
 
 ### Setup with Dispatcher
 
-***If you use AEM as a Cloud Service, this step doesn't apply.***
+***If you use AEM as a Cloud Service, this step doesn't apply***
 
-In case your AEM Author is hosted with Dispatcher, you need to bypass the Dispatcher module for the Server-Sent Event requests. Dispatcher doesn't support Server-Sent Events because it keeps the connection between AEM and browser open.
+In case your AEM Author is using Dispatcher, you need to bypass the Dispatcher module for the Server-Sent Event requests. Dispatcher doesn't support the long-running HTTP responses used by Server-Sent Events.
 
 For Apache2, simply add the below in your configuration, e.g. in the <VirtualHost> section (mod_proxy must be enabled):
 
-```xml
-<Location "/bin/aem-author-collab/sse">
-	# e.g. ProxyPassMatch http://localhost:4502
-	ProxyPassMatch http://<your-aem-host>:<your-aem-port>
-	RewriteEngine Off
-</Location>
+```
+# Specify the hostname and port of your AEM Author, e.g. localhost:4502
+ProxyPass "/bin/aem-author-collab/sse" "http://localhost:4502/bin/aem-author-collab/sse"
 ```
 
 ### Standalone build and installation
 
-If you prefer to check out the source from GitHub and build it yourself for manual installation of the package, first check out the code and build it on the root folder `aem-author-collab` with
+If you instead prefer to check out the source from GitHub and build it yourself for manual installation of the package, first check out the code and build it on the root folder `aem-author-collab` with
 
 ```shell
 mvn clean install
@@ -138,11 +135,11 @@ You can then install this zip file manually in your AEM Author instance in Packa
 
 ## Configuration
 
-All following configuration is optional, the package can get installed and most features used without any configuration. These OSGi configuration can be made manually in the Web Console or deployed as OSGi configuration nodes in the repository.
+All following configuration is optional, the package can get installed and most features used without any configuration. These OSGi configuration can be made manually in the Web Console or deployed as OSGi configuration nodes to the repository.
 
 ### CSRF Filter exclusion for Beacon URL
 
-For immediate detection of editors leaving the page, a Beacon request is used. Because this Beacon request is HTTP POST but doesn't carry a CSRF Token, AEM would block it. Without the below configuration, it will take longer (~1.5 min) to detect that the editor has left the page. This is an out of the box service and the value should be added to the existing configuration.
+For immediate detection of editors leaving the page, a Beacon request is used. Because this Beacon request uses HTTP POST but doesn't carry a CSRF Token, the AEM CSRF Filter blocks it. Without the below configuration, it will take longer (~1.5 min) to detect that the editor has left the page. This is an out of the box service and the value should be added to the existing configuration.
 
 Configuration PID: `com.adobe.granite.csrf.impl.CSRFFilter` 
 
