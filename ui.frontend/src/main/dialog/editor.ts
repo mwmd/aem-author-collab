@@ -261,7 +261,7 @@ function markReleased(editable: any) {
 function showRejectedWarning() {
 
     if (Coral && Coral.Dialog) {
-        return wait(1500).then(function(
+        return wait(1500).then(function() {
             debug("Showing alert");
             const alertWindow = new Coral.Dialog().set({
                 id: "rejected-alert",
@@ -278,7 +278,7 @@ function showRejectedWarning() {
                 },
                 variant: "warning"
             });
-            document.body.appendChild(alertWindo
+            document.body.appendChild(alertWindow);
             alertWindow.show();
         });
     }
