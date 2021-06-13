@@ -55,7 +55,7 @@ This works with current Maven archetypes for AEM (packaging in `all` module) and
 </repositories>	
 ```
 
-2. Then add the package dependency and version in the same file. If you later want to upgrade the integrated extension, all you need to update is this `version` property:
+2. Then add the package dependency and version in the same file. If you later want to upgrade the integrated extension, all you need to update is this <version> property:
 
 ```xml
 <dependencyManagement>
@@ -64,7 +64,7 @@ This works with current Maven archetypes for AEM (packaging in `all` module) and
         <dependency>
             <groupId>com.mwmd</groupId>
             <artifactId>aem-author-collab.all</artifactId>
-            <version>0.0.24</version>
+            <version>0.1.0</version>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -106,9 +106,25 @@ This works with current Maven archetypes for AEM (packaging in `all` module) and
 
 That's it, you can now build your application as usual. The package gets embedded into yours and will be installed automatically with yours.
 
+### Setup with Dispatcher
+
+***If you use AEM as a Cloud Service, this step doesn't apply.***
+
+In case your AEM Author is hosted with Dispatcher, you need to bypass the Dispatcher module for the Server-Sent Event requests. Dispatcher doesn't support Server-Sent Events because it keeps the connection between AEM and browser open.
+
+For Apache2, simply add the below in your configuration, e.g. in the <VirtualHost> section (mod_proxy must be enabled):
+
+```xml
+<Location "/bin/aem-author-collab/sse">
+	# e.g. ProxyPassMatch http://localhost:4502
+	ProxyPassMatch http://<your-aem-host>:<your-aem-port>
+	RewriteEngine Off
+</Location>
+```
+
 ### Standalone build and installation
 
-If you prefer to check out the source from GitHub and build it yourself for manual installation of the package, first check out the code and build it on the root folder `collab` with
+If you prefer to check out the source from GitHub and build it yourself for manual installation of the package, first check out the code and build it on the root folder `aem-author-collab` with
 
 ```shell
 mvn clean install
@@ -126,13 +142,13 @@ All following configuration is optional, the package can get installed and most 
 
 ### CSRF Filter exclusion for Beacon URL
 
-For immediate detection of editors leaving the page, a Beacon request is used. Because this Beacon request is HTTP POST but doesn't carry a CSRF Token, AEM would block it. Without the below configuration, it will take longer (~1 min) to detect that the editor has left the page. This is an out of the box service and the value should be added to the existing configuration.
+For immediate detection of editors leaving the page, a Beacon request is used. Because this Beacon request is HTTP POST but doesn't carry a CSRF Token, AEM would block it. Without the below configuration, it will take longer (~1.5 min) to detect that the editor has left the page. This is an out of the box service and the value should be added to the existing configuration.
 
 Configuration PID: `com.adobe.granite.csrf.impl.CSRFFilter` 
 
 | Property | Type           | Value |
 | --- | --- | --- |
-| `filter.excluded.paths` | string (multi) | `/bin/collab/beacon` |
+| `filter.excluded.paths` | string (multi) | `/bin/aem-author-collab/beacon` |
 
 ### Extension Features
 
@@ -150,9 +166,11 @@ The following configurations are automatically setup when installing the extensi
 
 | Configuration PID                                            | Purpose                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `org.apache.sling.jcr.repoinit.RepositoryInitializer~collab` | Creates a service user `collab-service` with read permissions for`/content` and `/home/users` |
-| `org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended~collab` | Makes the service user `collab-service` available to the extension |
+| `org.apache.sling.jcr.repoinit.RepositoryInitializer~aem-author-collab` | Creates a service user `aem-author-collab-service` with read permissions for`/content` and `/home/users` |
+| `org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended~aem-author-collab` | Makes the service user `aem-author-collab-service` available to the extension |
 
 ## References
 
 - [AEM Project Archetype](https://github.com/adobe/aem-project-archetype)
+- [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
+

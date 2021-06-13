@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "baseUrl": "../ui.frontend",
+        "removeComments": true,
+        "allowJs": true,
+        "preserveConstEnums": true,
+        "allowSyntheticDefaultImports": true,
+        "outFile": "./dist/clientlib-dialog/clientlib-dialog.js"
+    },
+    "include": [ "./src/**/*.ts" ]
+}

@@ -1,0 +1,6 @@
+{
+  "service.ranking": 0,
+  "user.mapping": [
+    "aem-author-collab.core:aemAuthorCollabService=[aem-author-collab-service]"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "scripts": [
+    "create service user aem-author-collab-service",
+    "set ACL for aem-author-collab-service \n allow jcr:read on /content,/home/users \n end"
+  ]
+}
