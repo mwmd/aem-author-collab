@@ -1,12 +1,13 @@
 # Live Authoring Collaboration for AEM Sites
 
-This project is an extension for the Adobe Experience Manager Sites platform. It enhances the AEM Author environment to support live collaboration of content editors, providing both protection during concurrent editing as well as additional features for live interaction. 
+This project is an extension for the Adobe Experience Manager Sites platform. It enhances the AEM Author user interface to support live collaboration for editors within content pages, providing both protection during concurrent editing as well as additional features for live interaction.
+The extension got showcased on the final of the 2021 edition of the Adobe [AEM Rockstar](https://rockstar.adobeevents.com/) community contest.
 
 ## Features
 
 - **Always current page content**
   - Immediate display of content updates
-  - Supports Add / Update / Remove / Move 
+  - Supports Add / Update / Remove / Move operations
   - Supports Style System updates
   - Supports Responsive Layout updates
 - **Component leasing**
@@ -21,7 +22,7 @@ This project is an extension for the Adobe Experience Manager Sites platform. It
   - Immediate annotation and sketch updates 
   - On-page notification for new annotations
 
-Although these features are available for use in the current release, it should be noted that this is an early version and should be considered a technology demo rather than production ready software.
+Although these features are available for use in the current release, it should be noted that this is an early version which should be considered a technology demo rather than production ready software.
 
 ## Supported platforms
 
@@ -33,11 +34,11 @@ Although these features are available for use in the current release, it should 
 
 ### Embedded installation with Maven
 
-The package is available as a Maven artifact and can get added to an existing AEM project. This is the simplest setup and the possible option with AEM as a Cloud Service.
+The package is available as a Maven artifact and can get added to an existing AEM project. This is the simplest setup and the only approach when using AEM as a Cloud Service.
 
-It works with current Maven archetypes for AEM (packaging in `all` module) as well as older Maven archetypes for AEM (packaging in `ui.apps` module). The below instructions assume the current Maven archetype.
+Integration works with current Maven archetypes for AEM (packaging in `all` module) as well as older Maven archetypes for AEM (packaging in `ui.apps` module). The below instructions assume the current Maven archetype.
 
-1. First add the Maven repository into the ***project*** `pom.xml`:
+1. First add the Maven repository into your ***project*** `pom.xml`:
 
 ```xml
 <repositories>
@@ -168,6 +169,7 @@ The following configurations are automatically setup when installing the extensi
 
 ## References
 
+- [AEM as a Cloud Service](https://experienceleague.adobe.com/docs/experience-manager-cloud-service/overview/introduction.html)
 - [AEM Project Archetype](https://github.com/adobe/aem-project-archetype)
 - [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
 

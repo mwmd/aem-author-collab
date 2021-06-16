@@ -148,7 +148,6 @@ function applyUpdate(updates: Update[]) {
                         if (refreshEditablePaths.has(e.path)) {
                             trace("already refreshing, ignoring " + e.path);
                         } else {
-                            // wait longer, if update was posted to exactly this refresh path
                             refreshEditables.add(e);
                             refreshEditablePaths.add(e.path);
                             trace("added editable to refresh", e);
