@@ -1,7 +1,7 @@
 # Live Authoring Collaboration for AEM Sites
 
 This project is an extension for the Adobe Experience Manager Sites platform. It enhances the AEM Author user interface to support live collaboration for editors within content pages, providing both protection during concurrent editing as well as additional features for live interaction.
-The extension got showcased on the final of the 2021 edition of the Adobe [AEM Rockstar](https://rockstar.adobeevents.com/) community contest.
+The extension won the final of the 2021 edition of the Adobe [AEM Rockstar](https://rockstar.adobeevents.com/) community contest.
 
 ## Features
 
